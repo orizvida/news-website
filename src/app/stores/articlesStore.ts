@@ -5,6 +5,7 @@ export default class ArticleStore {
     articles: Article[] = [];
     filter:"All"|"Business"|"Entertainment"|"General"|"Health"|"Science"|"Sports"|"Technology" = "All";
     searchInput:string = '';
+    currentArticle:Article|null = null;
 
     constructor() {
         makeAutoObservable(this);
@@ -26,6 +27,10 @@ export default class ArticleStore {
             this.listArticles();
 
         })
+    }
+    getArticle = (index:number) =>{
+        this.currentArticle =  this.articles[index];
+
     }
     setFilter = (filter:"All"|"Business"|"Entertainment"|"General"|"Health"|"Science"|"Sports"|"Technology" = "All") =>{
         this.filter = filter;

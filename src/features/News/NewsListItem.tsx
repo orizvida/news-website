@@ -1,5 +1,6 @@
 import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography } from '@mui/material'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Article } from '../../app/models/newsSource'
 
 interface Props{
@@ -28,7 +29,10 @@ export default function NewsListarticle({article}:Props) {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button size="small" color="primary">
+                <Button
+                component={Link}
+                to={`/${article.title}`}
+                size="small" color="primary">
                     Read more
                 </Button>
             </CardActions>
