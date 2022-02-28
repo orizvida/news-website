@@ -35,7 +35,7 @@ export default observer(function ArticlePage() {
   }
   return (
     <Box display='flex' justifyContent='center'>
-      <Box className='wrapper-center-column' width='80%' maxWidth='700px' sx={{ boxShadow: '3px 6px 14px 0 rgb(0 0 0 / 10%)', padding: '20px', position: 'relative' }}>
+      <Box className='wrapper-center-column' width='100%%' maxWidth='700px' sx={{ boxShadow: '3px 6px 14px 0 rgb(0 0 0 / 10%)', padding: '20px', position: 'relative' }}>
         <Box sx={{ position: 'absolute', top: '2%', left: '2%' }}>
           <IconButton onClick={() => nav('/')} sx={{ background: 'rgba(0,0,0,.1)' }}>
             <ArrowBackIosNewIcon sx={{ color: '#fff' }} />
