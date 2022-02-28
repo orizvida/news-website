@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios'
 import NewsSourceResponse from '../models/newsSource';
 
 //Preferable to put in an env file but at this moment we will put it here.
-const apiKey = 'd05503cdf43d4be2b90bbb7556bc1fdd'
+const apiKey = "0d26aac586374b11bc6abe8feef02831"
 axios.defaults.baseURL = 'https://newsapi.org/v2';
 
 axios.interceptors.response.use(async (response:any) => {
