@@ -7,16 +7,14 @@ import {
 import FilterSection from "../../features/filters/FilterSection";
 import ArticlePage from "../../features/News/ArticlePage";
 import NewsDashboard from "../../features/News/NewsDashboard";
-import Test from "../../features/Test";
-import agent from "../api/agent";
-import { store } from "../stores/store";
+
 
 
 export default function App() {
 
   // const nav = useNavigate();
   return (
-    <div className="App">
+    <div className="page-header">
 
       <Routes>
         <Route path="/" element={
@@ -26,7 +24,7 @@ export default function App() {
           </>
         
         } />
-         <Route path="/:id" element={
+         <Route path="/article" element={
          <ArticlePage/>
         
         } />

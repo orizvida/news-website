@@ -3,25 +3,36 @@ import agent from "../api/agent";
 import { Article } from "../models/newsSource";
 export default class ArticleStore {
     articles: Article[] = [];
-    filter:"All"|"Business"|"Entertainment"|"General"|"Health"|"Science"|"Sports"|"Technology" = "All";
+    filter:string = "All";
     searchInput:string = '';
     currentArticle:Article|null = null;
-
+    initialLoading:boolean = true;
+    total:number = 0;
+    currentPage:number = 1;
     constructor() {
         makeAutoObservable(this);
     }
 
     listArticles = async () => {
 
-        const results = this.filter === 'All' ? await agent.newsApi.getNews(this.searchInput || 'apple')
-         : await agent.newsApi.getByCategory(this.filter,this.searchInput);
+        this.initialLoading = true;
+        try{
+        const results = this.filter === 'All' ? await agent.newsApi.getNews(this.searchInput || 'a',this.currentPage)
+         : await agent.newsApi.getByCategory(this.filter,this.searchInput,this.currentPage);
         runInAction(() => {
-            this.articles = results.articles;
-            console.log(results.articles)
+            this.currentPage++;
+            this.articles = [...this.articles,...results.articles];
+            this.total = results.totalResults;
+            this.initialLoading = false;
         })
     }
+    catch(err){
+        runInAction(() =>{
+            this.initialLoading = false;
+        })
+    }
+    }
     setSearchInput = (input:string) =>{
-        console.log('setting')
         this.searchInput = input;
         runInAction(() =>{
             this.listArticles();
@@ -32,10 +43,16 @@ export default class ArticleStore {
         this.currentArticle =  this.articles[index];
 
     }
-    setFilter = (filter:"All"|"Business"|"Entertainment"|"General"|"Health"|"Science"|"Sports"|"Technology" = "All") =>{
+    setFilter = (filter:string) =>{
         this.filter = filter;
+        this.currentPage = 1;
+        this.articles=[];
         runInAction(() =>{
             this.listArticles();
         })
+    }
+    clearResults = () =>{
+        this.currentPage = 1;
+        this.articles = [];
     }
 }

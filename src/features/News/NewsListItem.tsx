@@ -1,4 +1,5 @@
 import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography } from '@mui/material'
+import { format } from 'date-fns'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Article } from '../../app/models/newsSource'
@@ -21,7 +22,7 @@ export default function NewsListarticle({article}:Props) {
                         {article.title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        {article.publishedAt}
+                    {article?.publishedAt && format(new Date(article?.publishedAt), 'yyyy-mm-dd')}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                         {article.description}
@@ -31,7 +32,7 @@ export default function NewsListarticle({article}:Props) {
             <CardActions>
                 <Button
                 component={Link}
-                to={`/${article.title}`}
+                to={`/article`}
                 size="small" color="primary">
                     Read more
                 </Button>

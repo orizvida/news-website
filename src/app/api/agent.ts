@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
-import NewsSourceResponse from '../models/newsSource';
+import NewsSourceResponse, { filter } from '../models/newsSource';
 
 
 const sleep = (delay: number) => {
@@ -42,8 +42,8 @@ const request = {
 
 
 const newsApi = {
-    getNews: (searchInput:string) => request.get<NewsSourceResponse>(`/everything?q="${searchInput}"&apiKey=8dc0370400a54c69b54756040ea0af0a`),
-    getByCategory: (cat:"All"|"Business"|"Entertainment"|"General"|"Health"|"Science"|"Sports"|"Technology",searchInput:string) => request.get<NewsSourceResponse>(`/top-headlines?country=us&category=${cat}&q=${searchInput}&apiKey=8dc0370400a54c69b54756040ea0af0a`)
+    getNews: (searchInput:string,currentPage:number) => request.get<NewsSourceResponse>(`/everything?q="${searchInput}"&page=${currentPage}&apiKey=d05503cdf43d4be2b90bbb7556bc1fdd`),
+    getByCategory: (cat:string,searchInput:string,currentPage:number) => request.get<NewsSourceResponse>(`/top-headlines?category=${cat}&page=${currentPage}&q=${searchInput}&apiKey=d05503cdf43d4be2b90bbb7556bc1fdd`)
 }
 
 const agent = {

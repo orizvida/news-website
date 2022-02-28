@@ -17,3 +17,5 @@ export interface Article{
     publishedAt:string;
     content:string;
 } 
+export type filter = "All"|"Business"|"Entertainment"|"General"|"Health"|"Science"|"Sports"|"Technology";
+export const filterOptions = ["All","Business","Entertainment","General","Health","Science","Sports","Technology"];
