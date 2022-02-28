@@ -1,26 +1,45 @@
-import { Box, FormControlLabel, Radio, TextField, Typography } from '@mui/material'
-import React from 'react'
+import { Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField, Typography } from '@mui/material'
+import { observer } from 'mobx-react-lite';
+import React, { useState } from 'react'
+import { store } from '../../app/stores/store';
 
-export default function FilterSection() {
+export default observer(function FilterSection() {
+    const [search, setSearch] = useState('');
+    const { articleStore: { setSearchInput, setFilter } } = store;
+
+    const handleFilterClick = (e: React.MouseEvent<HTMLLabelElement, MouseEvent>, name: "Business" | "Entertainment" | "General" | "Health" | "Science" | "Sports" | "Technology") => {
+        setFilter(name)
+    }
     return (
         <Box className='wrapper-center-column'>
-            <TextField id="outlined-basic" label="Search" variant="outlined" />
-            <Typography
-            variant='subtitle2'
-            color='primary'
-            >
-                Category
-            </Typography>
+            <TextField
+                onKeyUp={(e: any) => setSearchInput(e.target.value)}
+                id="outlined-basic"
+                label="Search" variant="outlined" />
+
             <Box className='wrapper-center'>
-                <FormControlLabel value="female" control={<Radio />} label="Business" />
-                <FormControlLabel value="female" control={<Radio />} label="Entertainment" />
-                <FormControlLabel value="female" control={<Radio />} label="General" />
-                <FormControlLabel value="female" control={<Radio />} label="Health" />
-                <FormControlLabel value="female" control={<Radio />} label="Science" />
-                <FormControlLabel value="female" control={<Radio />} label="Sports" />
-                <FormControlLabel value="female" control={<Radio />} label="Technology" />
+                <FormControl>
+                    <FormLabel  id="demo-radio-buttons-group-label">Category</FormLabel>
+                    <RadioGroup
+                        aria-labelledby="demo-radio-buttons-group-label"
+                        defaultValue="female"
+                        name="radio-buttons-group"
+                    >
+                        <Box display='flex'>
+                        <FormControlLabel onClick={e => setFilter('Business')} value="Business" control={<Radio />} label="Business" />
+                        <FormControlLabel onClick={e => setFilter('Entertainment')} value="Entertainment" control={<Radio />} label="Entertainment" />
+                        <FormControlLabel onClick={e => setFilter('General')} value="General" control={<Radio />} label="General" />
+                        <FormControlLabel onClick={e => setFilter('Health')} value="Health" control={<Radio />} label="Health" />
+                        <FormControlLabel onClick={e => setFilter('Science')} value="Science" control={<Radio />} label="Science" />
+                        <FormControlLabel onClick={e => setFilter('Sports')} value="Sports" control={<Radio />} label="Sports" />
+                        <FormControlLabel onClick={e => setFilter('Technology')} value="Technology" control={<Radio />} label="Technology" />
+                        </Box>
+                       
+                    </RadioGroup>
+                </FormControl>
+               
             </Box>
 
         </Box>
     )
-}
+})

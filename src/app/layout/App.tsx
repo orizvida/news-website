@@ -5,26 +5,36 @@ import {
   Route,
 } from "react-router-dom";
 import FilterSection from "../../features/filters/FilterSection";
+import NewsDashboard from "../../features/News/NewsDashboard";
 import Test from "../../features/Test";
 import agent from "../api/agent";
 import { store } from "../stores/store";
 
 
-export default observer(function App() {
+export default function App() {
 
   // const nav = useNavigate();
-  agent.newsApi.getNews().then((res) => console.log(res))
   return (
     <div className="App">
 
       <Routes>
-        <Route path="/test" element={<FilterSection/>} />
+        <Route path="/" element={
+          <>
+          <FilterSection/>
+          <NewsDashboard/>
+          </>
+        
+        } />
+         <Route path="/:articleId" element={
+         <ArticlePage
+        
+        } />
         
         <Route path="*" element={<NotFound/>} />
       </Routes>
     </div>
   );
-})
+}
 const NotFound = () =>{
   return <h2>Not found</h2>;
 

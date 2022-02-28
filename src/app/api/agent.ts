@@ -8,7 +8,7 @@ const sleep = (delay: number) => {
     })
 }
 
-axios.defaults.baseURL = 'https://newsapi.org/v2/';
+axios.defaults.baseURL = 'https://newsapi.org/v2';
 axios.interceptors.request.use(async (config:any) => {
     return config;
 })
@@ -42,7 +42,8 @@ const request = {
 
 
 const newsApi = {
-    getNews: () => request.get<NewsSourceResponse>(`top-headlines/sources?apiKey=8dc0370400a54c69b54756040ea0af0a`),
+    getNews: (searchInput:string) => request.get<NewsSourceResponse>(`/everything?q="${searchInput}"&apiKey=8dc0370400a54c69b54756040ea0af0a`),
+    getByCategory: (cat:"All"|"Business"|"Entertainment"|"General"|"Health"|"Science"|"Sports"|"Technology",searchInput:string) => request.get<NewsSourceResponse>(`/top-headlines?country=us&category=${cat}&q=${searchInput}&apiKey=8dc0370400a54c69b54756040ea0af0a`)
 }
 
 const agent = {
