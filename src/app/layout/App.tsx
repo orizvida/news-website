@@ -34,6 +34,3 @@ const NotFound = () =>{
   return <h2>Not found</h2>;
 
 }
-// function Users() {
-//   return <h2>Users</h2>;
-// }
