@@ -1,21 +1,11 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
-import NewsSourceResponse, { filter } from '../models/newsSource';
+import NewsSourceResponse from '../models/newsSource';
 
-
-const sleep = (delay: number) => {
-    return new Promise((resolve) => {
-        setTimeout(resolve, delay);
-    })
-}
-
+//Preferable to put in an env file but at this moment we will put it here.
+const apiKey = 'd05503cdf43d4be2b90bbb7556bc1fdd'
 axios.defaults.baseURL = 'https://newsapi.org/v2';
-axios.interceptors.request.use(async (config:any) => {
-    return config;
-})
-axios.interceptors.response.use(async (response:any) => {
-    if (process.env.NODE_ENV === 'development')
-        await sleep(200);
 
+axios.interceptors.response.use(async (response:any) => {
     return response;
 
 }, (error: AxiosError) => {
@@ -35,15 +25,15 @@ const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
 const request = {
     get: <T>(url: string) => axios.get<T>(url).then(responseBody),
-    post: <T>(url: string, body: {}) => axios.post<T>(url, body, { withCredentials: true }).then(responseBody),
-    put: <T>(url: string, body: {}) => axios.put<T>(url, body, { withCredentials: true }).then(responseBody),
-    del: <T>(url: string) => axios.delete<T>(url, { withCredentials: true }).then(responseBody),
+    post: <T>(url: string, body: {}) => axios.post<T>(url, body).then(responseBody),
+    put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
+    del: <T>(url: string) => axios.delete<T>(url).then(responseBody),
 }
 
 
 const newsApi = {
-    getNews: (searchInput:string,currentPage:number) => request.get<NewsSourceResponse>(`/everything?q="${searchInput}"&page=${currentPage}&apiKey=d05503cdf43d4be2b90bbb7556bc1fdd`),
-    getByCategory: (cat:string,searchInput:string,currentPage:number) => request.get<NewsSourceResponse>(`/top-headlines?category=${cat}&page=${currentPage}&q=${searchInput}&apiKey=d05503cdf43d4be2b90bbb7556bc1fdd`)
+    getNews: (searchInput:string,currentPage:number) => request.get<NewsSourceResponse>(`/everything?q="${searchInput}"&page=${currentPage}&apiKey=${apiKey}`),
+    getByCategory: (cat:string,searchInput:string,currentPage:number) => request.get<NewsSourceResponse>(`/top-headlines?category=${cat}&page=${currentPage}&q=${searchInput}&apiKey=${apiKey}`)
 }
 
 const agent = {

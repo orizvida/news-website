@@ -1,4 +1,4 @@
-import { Grid, Skeleton,Box,Typography } from '@mui/material';
+import { Grid, Skeleton,Box } from '@mui/material';
 import React from 'react'
 
 export default function CardPlaceHolder() {

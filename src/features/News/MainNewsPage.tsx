@@ -5,7 +5,7 @@ import NewsDashboard from './NewsDashboard'
 
 export default function MainNewsPage() {
   return (
-    <Box width="100vw" height="100vh">
+    <Box width="100%" height="100%">
          <FilterSection/>
           <NewsDashboard/>
     </Box>

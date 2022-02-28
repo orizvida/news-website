@@ -5,10 +5,12 @@ import App from './app/layout/App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, } from 'react-router-dom';
 import { store, StoreContext } from "./app/stores/store"
+import ScrollToTop from './app/layout/ScrollToTop';
 
 ReactDOM.render(
   <StoreContext.Provider value={store}>
     <Router>
+      <ScrollToTop/>
       <App />
     </Router>
   </StoreContext.Provider>,

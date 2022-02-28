@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { store } from '../../app/stores/store'
 import Divider from '@mui/material/Divider';
 import { format } from 'date-fns'
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import SearchIcon from '@mui/icons-material/Search';
 export default observer(function ArticlePage() {
   const nav = useNavigate();
@@ -13,7 +13,7 @@ export default observer(function ArticlePage() {
   const { articleStore: { getArticle, currentArticle } } = store;
   useEffect(() => {
     getArticle(Number(id) || 0);
-  })
+  },[id,getArticle])
   if (!currentArticle) {
     return (
       <Box className='wrapper-center-column' height="100vh">
@@ -35,13 +35,13 @@ export default observer(function ArticlePage() {
   }
   return (
     <Box display='flex' justifyContent='center'>
-      <Box className='wrapper-center-column' width='600px' sx={{ boxShadow: '3px 6px 14px 0 rgb(0 0 0 / 10%)', padding: '20px', position: 'relative' }}>
+      <Box className='wrapper-center-column' width='80%' maxWidth='700px' sx={{ boxShadow: '3px 6px 14px 0 rgb(0 0 0 / 10%)', padding: '20px', position: 'relative' }}>
         <Box sx={{ position: 'absolute', top: '2%', left: '2%' }}>
           <IconButton onClick={() => nav('/')} sx={{ background: 'rgba(0,0,0,.1)' }}>
-            <ArrowBackIosIcon sx={{ color: '#fff' }} />
+            <ArrowBackIosNewIcon sx={{ color: '#fff' }} />
           </IconButton>
         </Box>
-        <img src={currentArticle?.urlToImage} width="100%" height="auto" />
+        <img alt='article-thumbnail' src={currentArticle?.urlToImage || 'https://www.staticwhich.co.uk/static/images/products/no-image/no-image-available.png'} width="100%" height="auto" />
         <Typography
           variant='h5'
         >
@@ -63,7 +63,7 @@ export default observer(function ArticlePage() {
             variant='subtitle1'
             sx={{ width: '100%', margin: '5px 0px' }}
           >
-            Published at:{currentArticle?.publishedAt && format(new Date(currentArticle?.publishedAt), 'yyyy-mm-dd')}
+            Published at:{currentArticle?.publishedAt && format(new Date(currentArticle?.publishedAt), 'MM/dd/yyyy')}
           </Typography>
         </Box>
 
