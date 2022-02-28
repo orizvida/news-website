@@ -66,8 +66,15 @@ export default observer(function ArticlePage() {
             Published at:{currentArticle?.publishedAt && format(new Date(currentArticle?.publishedAt), 'MM/dd/yyyy')}
           </Typography>
         </Box>
+        <Typography
+          variant='body1'
+          sx={{width:'100%',color:'rgba(0,0,0,.8)'}}
+        >
+          Description:{currentArticle?.description}
+        </Typography>
 
         <Typography
+        sx={{marginTop:2}}
           variant='body1'
         >
           {currentArticle?.content}
