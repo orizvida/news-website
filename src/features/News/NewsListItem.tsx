@@ -6,8 +6,9 @@ import { Article } from '../../app/models/newsSource'
 
 interface Props{
     article:Article;
+    index:number;
 }
-export default function NewsListarticle({article}:Props) {
+export default function NewsListarticle({article,index}:Props) {
     return (
         <Card sx={{ maxWidth: 345 }}>
             <CardActionArea>
@@ -32,7 +33,7 @@ export default function NewsListarticle({article}:Props) {
             <CardActions>
                 <Button
                 component={Link}
-                to={`/article`}
+                to={`/article/${index}`}
                 size="small" color="primary">
                     Read more
                 </Button>

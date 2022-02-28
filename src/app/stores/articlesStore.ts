@@ -3,55 +3,61 @@ import agent from "../api/agent";
 import { Article } from "../models/newsSource";
 export default class ArticleStore {
     articles: Article[] = [];
-    filter:string = "All";
-    searchInput:string = '';
-    currentArticle:Article|null = null;
-    initialLoading:boolean = true;
-    total:number = 0;
-    currentPage:number = 1;
+    filter: string = "All";
+    searchInput: string = '';
+    currentArticle: Article | null = null;
+    initialLoading: boolean = true;
+    loading: boolean = false;
+    total: number = 0;
+    currentPage: number = 1;
     constructor() {
         makeAutoObservable(this);
     }
 
     listArticles = async () => {
+        if (this.currentPage === 0)
+            this.initialLoading = true;
+        else
+            this.loading = true;
+        try {
+            const results = this.filter === 'All' ? await agent.newsApi.getNews(this.searchInput || 'a', this.currentPage)
+                : await agent.newsApi.getByCategory(this.filter, this.searchInput, this.currentPage);
+            runInAction(() => {
+                this.currentPage++;
+                this.articles = [...this.articles, ...results.articles];
+                this.total = results.totalResults;
+                if(this.initialLoading)this.initialLoading = false;
+                if(this.loading)this.loading = false;
+            })
+        }
+        catch (err) {
+            runInAction(() => {
+                if(this.initialLoading)this.initialLoading = false;
+                if(this.loading)this.loading = false;
 
-        this.initialLoading = true;
-        try{
-        const results = this.filter === 'All' ? await agent.newsApi.getNews(this.searchInput || 'a',this.currentPage)
-         : await agent.newsApi.getByCategory(this.filter,this.searchInput,this.currentPage);
-        runInAction(() => {
-            this.currentPage++;
-            this.articles = [...this.articles,...results.articles];
-            this.total = results.totalResults;
-            this.initialLoading = false;
-        })
+            })
+        }
     }
-    catch(err){
-        runInAction(() =>{
-            this.initialLoading = false;
-        })
-    }
-    }
-    setSearchInput = (input:string) =>{
+    setSearchInput = (input: string) => {
         this.searchInput = input;
-        runInAction(() =>{
+        runInAction(() => {
             this.listArticles();
 
         })
     }
-    getArticle = (index:number) =>{
-        this.currentArticle =  this.articles[index];
+    getArticle = (index: number) => {
+        this.currentArticle = this.articles[index];
 
     }
-    setFilter = (filter:string) =>{
+    setFilter = (filter: string) => {
         this.filter = filter;
         this.currentPage = 1;
-        this.articles=[];
-        runInAction(() =>{
+        this.articles = [];
+        runInAction(() => {
             this.listArticles();
         })
     }
-    clearResults = () =>{
+    clearResults = () => {
         this.currentPage = 1;
         this.articles = [];
     }

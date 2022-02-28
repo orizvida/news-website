@@ -1,12 +1,9 @@
-import { observer } from "mobx-react-lite";
-import React, { useEffect } from "react";
 import {
   Routes,
   Route,
 } from "react-router-dom";
-import FilterSection from "../../features/filters/FilterSection";
 import ArticlePage from "../../features/News/ArticlePage";
-import NewsDashboard from "../../features/News/NewsDashboard";
+import MainNewsPage from "../../features/News/MainNewsPage";
 
 
 
@@ -19,12 +16,11 @@ export default function App() {
       <Routes>
         <Route path="/" element={
           <>
-          <FilterSection/>
-          <NewsDashboard/>
+          <MainNewsPage/>
           </>
         
         } />
-         <Route path="/article" element={
+         <Route path="/article/:id" element={
          <ArticlePage/>
         
         } />
